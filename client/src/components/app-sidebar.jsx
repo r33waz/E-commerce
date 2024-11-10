@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -41,6 +40,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "@/rtk/auth-slice/auth-thunk";
 import Loading from "./common/loading";
+import ThemeToggle from "./theme-toggle";
 
 function AppSidebar({ data }) {
   const { pathname } = useLocation();
@@ -56,10 +56,10 @@ function AppSidebar({ data }) {
       });
   };
   return (
-    <SidebarProvider>
-      <Sidebar collapsible="icon">
-        <SidebarHeader>
-          <SidebarMenu>
+    <SidebarProvider className="dark:bg-dark-theme dark:text-white">
+      <Sidebar collapsible="icon" className="bg-light-theme">
+        <SidebarHeader >
+          <SidebarMenu >
             <SidebarMenuItem>
               <SidebarMenuButton
                 size="lg"
@@ -84,7 +84,14 @@ function AppSidebar({ data }) {
               {data?.map((item, idx) => (
                 <SidebarMenuItem key={idx}>
                   <SidebarMenuButton asChild>
-                    <NavLink to={item.url}>
+                    <NavLink
+                      to={item.url}
+                      className={`${
+                        pathname === item.url
+                          ? "dark:hover:bg-gray-400/40 cursor-pointer hover:bg-gray-400/40 bg-gray-400/40"
+                          : ""
+                      }`}
+                    >
                       {item.icon}
                       <span>{item.label.toUpperCase()}</span>
                     </NavLink>
@@ -96,15 +103,18 @@ function AppSidebar({ data }) {
         </SidebarContent>
         <SidebarFooter>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger
+              asChild
+              className="dark:bg-gray-500 dark:text-white dark:bg-opacity-60"
+            >
               <SidebarMenuButton
                 size="lg"
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user?.avatar} alt={user.username} />
-                  <AvatarFallback className="rounded-lg bg-gray-400">
-                    {user?.username?.[0]}
+                  <AvatarFallback className="rounded-lg text-xl bg-gray-400 text-black">
+                    {user?.username ? user?.username[0] : "a"}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -117,32 +127,35 @@ function AppSidebar({ data }) {
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+              className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg  dark:bg-gray-700 dark:text-white dark:bg-opacity-60"
               side="bottom"
               align="end"
               sideOffset={4}
             >
               <DropdownMenuLabel className="p-0 font-normal">
-                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={user?.avatar} alt={user.username} />
-                    <AvatarFallback className="rounded-lg bg-gray-400">
-                      {user?.username?.[0]}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">
-                      {user.username}
-                    </span>
-                    <span className="truncate text-xs">{user.email}</span>
+                <div className="flex items-center gap-2  py-1.5 px-2.5 text-sm flex-col ">
+                  <div className="flex gap-2 w-full justify-start ">
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage src={user?.avatar} alt={user.username} />
+                      <AvatarFallback className="rounded-lg bg-gray-400  text-black text-xl">
+                        {user?.username ? user?.username[0] : "a"}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="grid place-items-start w-full  text-sm ">
+                      <span className="truncate font-semibold">
+                        {user.username}
+                      </span>
+                      <span className="truncate text-xs">{user.email}</span>
+                    </div>
                   </div>
+                  <ThemeToggle />
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Button
                   className="flex items-center gap-1 dark:bg-white dark:text-black bg-black text-white hover:bg-opacity-70 w-full"
-                  onClick={handleLogout} 
+                  onClick={handleLogout}
                 >
                   {loading ? (
                     <Loading width={25} height={25} />

@@ -16,7 +16,6 @@ import { useEffect } from "react";
 import { checkAuth } from "@/rtk/auth-slice/auth-thunk";
 import Loading from "@/components/common/loading";
 function App() {
-  const path = useLocation().pathname;
   const { isAuthenticated, user, loading } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -25,7 +24,7 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (loading && !path === "/auth/login" && !path === "/auth/signup") {
+  if (loading) {
     return (
       <Loading
         width={100}

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { userLogin } from "@/rtk/auth-slice/auth-thunk";
 import Loading from "@/components/common/loading";
+import { Input } from "@/components/ui/input";
 
 const Login = () => {
   const [isShoewPass, setShowPass] = useState(false);
@@ -53,8 +54,7 @@ const Login = () => {
               >
                 Email
               </label>
-              <input
-                type="email"
+              <Input
                 id="email"
                 name="email"
                 className="mt-1 block lg:text-sm text-xs w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
@@ -73,7 +73,7 @@ const Login = () => {
               >
                 Password
               </label>
-              <input
+              <Input
                 type={isShoewPass ? "text" : "password"}
                 id="password"
                 name="password"

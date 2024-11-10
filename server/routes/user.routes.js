@@ -4,7 +4,7 @@ import {
   LogoutUser,
   RefreshToken,
   UserSignUp,
-} from "../controller/user.controller.js";
+} from "../controller/auth/auth.controller.js";
 import { apiLimiter } from "../utils/rateLimiter.js";
 import { AuthCheck, Authentication } from "../middleware/auth.middleware.js";
 

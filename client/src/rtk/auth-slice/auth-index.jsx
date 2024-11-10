@@ -33,10 +33,9 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(userLogin.fulfilled, (state, action) => {
-        if (state.user !== action.payload.user) {
-          state.user = action.payload.user;
-          state.isAuthenticated = action.payload.status;
-        }
+        console.log("action",action)
+        state.user = action.payload.status ? action.payload.user : null;
+        state.isAuthenticated = action.payload.status;
         state.loading = false;
       })
       .addCase(userLogin.rejected, (state, action) => {
@@ -51,10 +50,10 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
-        if (state.isAuthenticated !== action.payload.status || state.user !== action.payload.user) {
-          state.isAuthenticated = action.payload.status;
-          state.user = action.payload.user;
-        }
+        state.user = action.payload.status
+          ? action.payload.user
+          : null;
+        state.isAuthenticated = action.payload.status;
         state.loading = false;
       })
       .addCase(checkAuth.rejected, (state) => {
@@ -76,8 +75,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = false;
         state.user = null;
-      })
-      
+      });
   },
 });
 

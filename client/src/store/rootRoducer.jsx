@@ -1,5 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import  authReducer  from "@/rtk/auth-slice/auth-index";
+import authReducer from "@/rtk/auth-slice/auth-index";
+import prodReducer from "@/rtk/admin-slice/product/product-index";
 
 // const persistConfig = {
 //     key: "root",
@@ -8,6 +9,7 @@ import  authReducer  from "@/rtk/auth-slice/auth-index";
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  prod: prodReducer,
 });
 
 export default rootReducer;
