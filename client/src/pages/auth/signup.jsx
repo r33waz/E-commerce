@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "@/rtk/auth-slice/auth-thunk";
+import { Input } from "@/components/ui/input";
 
 const Signup = () => {
   const [isShoewPass, setShowPass] = useState(false);
@@ -66,7 +67,7 @@ const Signup = () => {
             >
               Username
             </label>
-            <input
+            <Input
               type="text"
               id="username"
               name="username"
@@ -86,8 +87,7 @@ const Signup = () => {
             >
               Email
             </label>
-            <input
-              type="email"
+            <Input
               id="email"
               name="email"
               className="mt-1 block w-full px-3 py-2 lg:text-sm text-xs border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
@@ -106,7 +106,7 @@ const Signup = () => {
             >
               Password
             </label>
-            <input
+            <Input
               type={isShoewPass ? "text" : "password"}
               id="password"
               name="password"
@@ -157,7 +157,7 @@ const Signup = () => {
             >
               Confirm Password
             </label>
-            <input
+            <Input
               type={showPassword ? "text" : "password"}
               id="confirmPassword"
               name="confirmPassword"

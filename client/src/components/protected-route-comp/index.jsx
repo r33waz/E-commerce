@@ -1,39 +1,62 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-const ProtectedRoute = ({ isAuthenticated, user, children }) => {
-  const path = useLocation().pathname;
-  console.log("Current path:", path);
+function ProtectedRoute({ isAuthenticated, user, children }) {
+  const location = useLocation();
+  console.log(isAuthenticated, user)
 
-  const authPaths = ["/auth/login", "/auth/signup"];
-  if (!isAuthenticated && !authPaths.includes(path)) {
+  console.log(location.pathname, isAuthenticated);
+
+  if (location.pathname === "/") {
+    if (!isAuthenticated) {
+      return <Navigate to="/auth/login" />;
+    } else {
+      if (user?.role === "admin") {
+        return <Navigate to="/admin/dashboard" />;
+      } else {
+        return <Navigate to="/e-com/home" />;
+      }
+    }
+  }
+
+  if (
+    !isAuthenticated &&
+    !(
+      location.pathname.includes("/login") ||
+      location.pathname.includes("/register")
+    )
+  ) {
     return <Navigate to="/auth/login" />;
   }
 
-  if (isAuthenticated && authPaths.includes(path)) {
-    return user?.role === "admin" ? (
-      <Navigate to="/admin/dashboard" />
-    ) : (
-      <Navigate to="/e-com/home" />
-    );
+  if (
+    isAuthenticated &&
+    (location.pathname.includes("/login") ||
+      location.pathname.includes("/register"))
+  ) {
+    if (user?.role === "admin") {
+      return <Navigate to="/admin/dashboard" />;
+    } else {
+      return <Navigate to="/shop/home" />;
+    }
   }
 
-  if (isAuthenticated && user?.role !== "admin" && path.startsWith("/admin")) {
-    return <Navigate to="/e-com/home" />;
+  if (
+    isAuthenticated &&
+    user?.role !== "admin" &&
+    location.pathname.includes("admin")
+  ) {
+    return <Navigate to="*" />;
   }
 
-  if (isAuthenticated && user?.role === "admin" && path.startsWith("/e-com")) {
+  if (
+    isAuthenticated &&
+    user?.role === "admin" &&
+    location.pathname.includes("shop")
+  ) {
     return <Navigate to="/admin/dashboard" />;
   }
 
-  if (path === "/") {
-    return user?.role === "admin" ? (
-      <Navigate to="/admin/dashboard" />
-    ) : (
-      <Navigate to="/e-com/home" />
-    );
-  }
-
   return <>{children}</>;
-};
+}
 
 export default ProtectedRoute;
