@@ -23,9 +23,13 @@ const UserSchema = new mongoose.Schema(
     refreshTokens: [
       {
         token: { type: String },
-        createdAt: { type: Date, default: Date.now},
+        createdAt: { type: Date, default: Date.now },
       },
     ],
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

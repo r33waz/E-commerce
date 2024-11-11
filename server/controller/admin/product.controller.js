@@ -167,6 +167,7 @@ export const deleteProduct = async (req, res) => {
 
 export const editProduct = async (req, res) => {
   const { id } = req.params;
+  console.log("id",id)
   const { title, description, category, brand, price, salePrice, totalStock } =
     req.body;
 
@@ -257,3 +258,5 @@ export const editProduct = async (req, res) => {
     });
   }
 };
+
+

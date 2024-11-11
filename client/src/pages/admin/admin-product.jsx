@@ -87,7 +87,7 @@ const AdminProduct = () => {
                 </div>
               </CardContent>
               <CardFooter className="flex justify-between px-1.5 gap-1 mt-2">
-                <EiditProduct />
+                <EiditProduct products={product} />
                 <Button
                   className="w-full dark:bg-white dark:text-black bg-black h-8 p-1 hover:bg-opacity-80 text-white"
                   onClick={() => handleDelete(product._id)}
