@@ -66,7 +66,7 @@ const AddProduct = () => {
           <span> Add product</span>
         </SheetTrigger>
       </div>
-      <SheetContent className="lg:w-[600px] w-[375px] bg-light-theme overflow-y-scroll scrollbar">
+      <SheetContent className="lg:w-[600px] w-[375px] bg-light-theme overflow-y-auto scrollbar scrollbar-thin h-[100dvh]">
         <SheetHeader>
           <SheetTitle>Create Product</SheetTitle>
           <SheetDescription>
@@ -74,7 +74,7 @@ const AddProduct = () => {
             creativity, and purpose.
           </SheetDescription>
           <form
-            className="flex flex-col pt-2 gap-4 "
+            className="flex flex-col md:gap-4 gap-6 md:justify-normal justify-between "
             onSubmit={handleSubmit(onSubmit)}
           >
             <div>

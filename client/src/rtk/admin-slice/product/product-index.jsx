@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createProduct, deleteProduct, getAllProducts } from "./product-thunnk";
+import {
+  createProduct,
+  deleteProduct,
+  eiditProduct,
+  getAllProducts,
+} from "./product-thunnk";
 
 const initialState = {
   loading: false,
@@ -35,7 +40,7 @@ const producSlice = createSlice({
       state.loading = false;
       state.error = action.error.message;
     });
-    
+
     // delete post
     builder.addCase(deleteProduct.pending, (state) => {
       state.loading = true;
@@ -44,6 +49,18 @@ const producSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(deleteProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
+
+    //eidit product s
+    builder.addCase(eiditProduct.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(eiditProduct.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(eiditProduct.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     });

@@ -87,7 +87,7 @@ const generateRefreshToken = async (user) => {
     expiresIn: "1d",
   });
 };
-
+// LOGIN FUNCTION (no change from your provided code)
 export const LoginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -97,6 +97,7 @@ export const LoginUser = async (req, res) => {
         .status(404)
         .json({ status: false, message: "Invalid email or password" });
     }
+
     const passwordMatch = await bycrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res
@@ -104,12 +105,17 @@ export const LoginUser = async (req, res) => {
         .json({ status: false, message: "Invalid email or password" });
     }
 
+    // Set isActive to true when the user logs in
+    user.isActive = true;
+    await user.save();
+
     const accessToken = await generateAccessToken({
       id: user.id,
       username: user.userName,
       email: user.email,
       role: user.role,
     });
+
     const refreshToken = await generateRefreshToken({
       id: user.id,
       username: user.userName,
@@ -164,7 +170,7 @@ export const RefreshToken = async (req, res) => {
     }
 
     // Verify the refresh token
-    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, userData) => {
       if (err) {
         return res.status(403).json({ message: "Invalid refresh token" });
       }
@@ -196,6 +202,7 @@ export const LogoutUser = async (req, res) => {
     user.refreshTokens = user.refreshTokens.filter(
       (token) => token.token !== refreshToken
     );
+    user.isActive = false;
     await user.save();
 
     res.clearCookie("access_Token");

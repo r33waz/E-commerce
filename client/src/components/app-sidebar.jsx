@@ -194,7 +194,7 @@ function AppSidebar({ data }) {
             </div>
           </div>
         </header>
-        <main className="flex-1 overflow-auto p-4">
+        <main className="flex-1 overflow-auto p-4 dark:bg-dark-theme ">
           <Outlet />
         </main>
       </SidebarInset>

@@ -35,7 +35,6 @@ export const getAllProducts = createAsyncThunk("get/all-products", async () => {
   }
 });
 
-
 //delete product
 export const deleteProduct = createAsyncThunk(
   "delete/product",
@@ -55,3 +54,27 @@ export const deleteProduct = createAsyncThunk(
     }
   }
 );
+
+// eidit product
+export const eiditProduct = createAsyncThunk(
+  "eidit/product",
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const response = await photo_url.patch(
+        `/api/v1/product-update/${id}`, 
+        data
+      );
+      SuccessToast({ message: response.data.message });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      if (error?.response?.data?.message) {
+        ErrorToast({ message: error?.response?.data?.message });
+      } else {
+        return;
+      }
+      return rejectWithValue(error);
+    }
+  }
+);
+

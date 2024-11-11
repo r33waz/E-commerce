@@ -3,7 +3,7 @@ import axios from "axios";
 console.log(import.meta.env.VITE_SERVER_URL)
 const BASE_API = {
   baseURL: `${import.meta.env.VITE_SERVER_URL}`,
-  timeout: 2000,
+  timeout:5000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,7 +12,7 @@ const BASE_API = {
 
 const PHOTO_API = {
   baseURL: `${import.meta.env.VITE_SERVER_URL}`,
-  timeout: 10000,
+  timeout: 20000,
   headers: {
     "Content-Type": "multipart/form-data",
   },
@@ -24,8 +24,6 @@ const refreshAccessToken = async () => {
     const response = await main_url.get(
       `${import.meta.env.VITE_SERVER_URL}/api/v1/refresh-token`
     );
-
-    localStorage.setItem("accessToken", response.data.accessToken);
     return response.data.accessToken;
   } catch (error) {
     console.error("Refresh token is expired or invalid:", error);
